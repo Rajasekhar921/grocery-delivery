@@ -1,79 +1,48 @@
-# A grocery delivery application in python
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Grocery Application</title>
+  <script>
+    // Define an array to store the grocery items
+    var groceryList = [];
 
-# Define a class for the grocery items
-class Item:
-  def __init__(self, name, price, quantity):
-    self.name = name
-    self.price = price
-    self.quantity = quantity
+    function addGroceryItem() {
+      // Get the input value
+      var item = document.getElementById("item").value;
 
-  def __str__(self):
-    return f"{self.name} - ${self.price} x {self.quantity}"
+      // Add the item to the grocery list array
+      groceryList.push(item);
 
-# Define a class for the shopping cart
-class Cart:
-  def __init__(self):
-    self.items = []
+      // Clear the input field
+      document.getElementById("item").value = "";
 
-  def add_item(self, item):
-    self.items.append(item)
+      // Call the displayGroceryList function to update the list
+      displayGroceryList();
+    }
 
-  def remove_item(self, item):
-    if item in self.items:
-      self.items.remove(item)
+    function displayGroceryList() {
+      // Get the grocery list element
+      var list = document.getElementById("grocery-list");
 
-  def get_total(self):
-    total = 0
-    for item in self.items:
-      total += item.price * item.quantity
-    return total
+      // Clear the list
+      list.innerHTML = "";
 
-  def __str__(self):
-    result = "Your shopping cart:\n"
-    for item in self.items:
-      result += str(item) + "\n"
-    result += f"Total: ${self.get_total()}"
-    return result
+      // Loop through the grocery list array and create list items
+      for (var i = 0; i < groceryList.length; i++) {
+        var listItem = document.createElement("li");
+        listItem.appendChild(document.createTextNode(groceryList[i]));
+        list.appendChild(listItem);
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Grocery Application</h1>
 
-# Define a class for the delivery service
-class Delivery:
-  def __init__(self, name, fee):
-    self.name = name
-    self.fee = fee
+  <input type="text" id="item" placeholder="Enter item">
+  <button onclick="addGroceryItem()">Add Item</button>
 
-  def __str__(self):
-    return f"{self.name} - ${self.fee}"
-
-# Define some sample items
-apple = Item("Apple", 0.5, 1)
-banana = Item("Banana", 0.3, 2)
-milk = Item("Milk", 2.5, 1)
-bread = Item("Bread", 1.5, 1)
-
-# Define some sample delivery services
-express = Delivery("Express", 5)
-standard = Delivery("Standard", 3)
-pickup = Delivery("Pickup", 0)
-
-# Create a new shopping cart
-cart = Cart()
-
-# Add some items to the cart
-cart.add_item(apple)
-cart.add_item(banana)
-cart.add_item(milk)
-
-# Print the cart
-print(cart)
-
-# Remove an item from the cart
-cart.remove_item(banana)
-
-# Print the cart again
-print(cart)
-
-# Choose a delivery service
-delivery = express
-
-# Print the final order
-print(f"Your order:\n{cart}\nDelivery: {delivery}\nGrand Total: ${cart.get_total() + delivery.fee}")
+  <h2>Grocery List:</h2>
+  <ul id="grocery-list"></ul>
+</body>
+</html>
